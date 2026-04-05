@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+html {
+  background-color: #1e293b;
+}
+
+body {
+  font-family: 'Chelsea Market', cursive;
+  position: relative;
+  min-height: 100%;
+  background-color: #1e293b;
+}

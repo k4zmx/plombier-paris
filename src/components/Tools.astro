@@ -1,0 +1,135 @@
+---
+const tools = [
+  { name: 'Grohe', img: '/grohe.png' },
+  { name: 'Bosch', img: '/bosch.png' },
+  { name: 'Viessmann', img: '/viessmann.png' },
+  { name: 'Watts', img: '/watts.png' },
+  { name: 'Geberit', img: '/geberit.png' },
+  { name: 'Grundfos', img: '/grundfos.png' },
+  { name: 'Atlantic', img: '/atlantic.png' },
+  { name: 'Chaffoteaux', img: '/chaffoteaux.png' },
+  { name: 'Deitrich', img: '/deitrich.png' },
+  { name: 'Duval', img: '/duval.png' },
+];
+---
+
+<section class="tools">
+  <div class="tools-inner">
+    <h2 class="tools-title">Nos Marques Partenaires</h2>
+    <div class="tools-card">
+      <div class="tools-marquee">
+        <div class="tools-track">
+          {tools.map((t) => (
+            <div class="tools-item">
+              <img src={t.img} alt={t.name} class="tools-logo" />
+            </div>
+          ))}
+          {tools.map((t) => (
+            <div class="tools-item" aria-hidden="true">
+              <img src={t.img} alt="" class="tools-logo" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tools {
+    position: relative;
+    z-index: 1;
+    padding: 60px 16px;
+  }
+
+  .tools-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tools-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 28px;
+    line-height: 1.2;
+  }
+
+  .tools-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    animation: float 5s ease-in-out infinite;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .tools-marquee {
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .tools-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 52px;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+
+  .tools-item {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tools-logo {
+    height: 44px;
+    width: auto;
+    max-width: 110px;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter 0.2s ease;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .tools-logo:hover { filter: grayscale(0%); }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (max-width: 640px) {
+    .tools {
+      padding: 48px 12px;
+    }
+
+    .tools-card {
+      padding: 20px 0;
+      border-radius: 16px;
+    }
+
+    .tools-track {
+      gap: 36px;
+      animation-duration: 18s;
+    }
+
+    .tools-logo {
+      height: 32px;
+      max-width: 80px;
+    }
+  }
+</style>

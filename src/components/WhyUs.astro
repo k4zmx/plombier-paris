@@ -1,0 +1,129 @@
+---
+---
+
+<section class="whyus" id="whyus">
+  <div class="whyus-inner">
+
+    <div class="whyus-content">
+      <h2>Pourquoi nous choisir ?</h2>
+      <p class="whyus-intro">Notre priorité : assurer le bon fonctionnement de vos installations, réparer durablement et vous laisser des équipements <strong>propres, fonctionnels et fiables</strong>, sans mauvaise surprise sur la facture.</p>
+
+      <ul class="whyus-list">
+        <li><span class="bullet-title">Diagnostic clair</span> sur place et devis expliqué avant intervention.</li>
+        <li><span class="bullet-title">Dépannage rapide</span> selon l'urgence (fuite d'eau, canalisation bouchée, cumulus en panne…).</li>
+        <li><span class="bullet-title">Travail soigné</span>, respect des lieux, nettoyage en fin d'intervention.</li>
+        <li><span class="bullet-title">Un seul interlocuteur</span> pour votre plomberie et vos installations sanitaires.</li>
+      </ul>
+    </div>
+
+    <div class="whyus-image">
+      <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&q=80&w=800" alt="Plombier professionnel au travail" />
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .whyus {
+    padding: 80px 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .whyus-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .whyus-content {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .whyus-content h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 16px;
+  }
+
+  .whyus-intro {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.75;
+    margin-bottom: 28px;
+  }
+
+  .whyus-intro strong { color: #0f172a; }
+
+  .whyus-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .whyus-list li {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+    padding-left: 16px;
+    border-left: 3px solid #1d4ed8;
+  }
+
+  .bullet-title {
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .whyus-image {
+    flex: 0 0 380px;
+  }
+
+  .whyus-image img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (max-width: 768px) {
+    .whyus {
+      padding: 60px 12px;
+    }
+
+    .whyus-inner {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .whyus-content {
+      padding: 24px 20px;
+    }
+
+    .whyus-image {
+      flex: none;
+      width: 100%;
+    }
+
+    .whyus-image img {
+      height: 220px;
+    }
+  }
+</style>

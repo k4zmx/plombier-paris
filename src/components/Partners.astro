@@ -1,0 +1,134 @@
+---
+const partners = [
+  { name: 'AXA', img: '/axa.png' },
+  { name: 'MAIF', img: '/maif.png' },
+  { name: 'MACIF', img: '/macif.png' },
+  { name: 'GMF', img: '/gmf.png' },
+  { name: 'Allianz', img: '/allianz.png' },
+  { name: 'MMA', img: '/mma.jpg' },
+  { name: 'Groupama', img: '/groupama.png' },
+  { name: 'Matmut', img: '/matmut.png' },
+  { name: 'MAAF', img: '/maaf.png' },
+];
+---
+
+<section class="partners">
+  <div class="partners-inner">
+    <h2 class="partners-title">Agréé par les Assurances</h2>
+    <div class="partners-card">
+      <div class="partners-marquee">
+        <div class="partners-track">
+          {partners.map((p) => (
+            <div class="partners-item">
+              <img src={p.img} alt={p.name} class="partners-logo" />
+            </div>
+          ))}
+          {partners.map((p) => (
+            <div class="partners-item" aria-hidden="true">
+              <img src={p.img} alt="" class="partners-logo" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .partners {
+    position: relative;
+    z-index: 1;
+    padding: 60px 16px;
+  }
+
+  .partners-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .partners-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 28px;
+    line-height: 1.2;
+  }
+
+  .partners-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    animation: float 5s ease-in-out infinite;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .partners-marquee {
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .partners-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 52px;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+
+  .partners-item {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .partners-logo {
+    height: 44px;
+    width: auto;
+    max-width: 110px;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter 0.2s ease;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .partners-logo:hover { filter: grayscale(0%); }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (max-width: 640px) {
+    .partners {
+      padding: 48px 12px;
+    }
+
+    .partners-card {
+      padding: 20px 0;
+      border-radius: 16px;
+    }
+
+    .partners-track {
+      gap: 36px;
+      animation-duration: 18s;
+    }
+
+    .partners-logo {
+      height: 32px;
+      max-width: 80px;
+    }
+  }
+</style>

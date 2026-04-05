@@ -1,0 +1,292 @@
+<div
+  id="popup-overlay"
+  class="popup-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="popup-title"
+  aria-hidden="true"
+>
+  <div class="popup-card">
+
+    <button type="button" class="popup-close" data-popup-close aria-label="Fermer">×</button>
+
+    <div id="popup-view-1" class="popup-view popup-view--visible">
+      <span class="popup-badge popup-badge--urgent">OFFRE PREMIÈRE INTERVENTION</span>
+      <h2 id="popup-title" class="popup-title">
+        Appelez maintenant et obtenez un code promo exclusif !
+      </h2>
+      <p class="popup-subtitle">Mentionnez ce code lors de votre appel pour bénéficier de votre réduction.</p>
+      <div id="popup-countdown" class="popup-countdown" aria-live="polite">20</div>
+      <button type="button" class="popup-reveal" id="popup-reveal">🎁 Révéler mon code promo</button>
+    </div>
+
+    <div id="popup-view-2" class="popup-view">
+      <span class="popup-badge popup-badge--success">CODE RÉVÉLÉ ✓</span>
+      <p class="popup-code-label">Votre code promo :</p>
+      <p id="popup-code" class="popup-code" aria-live="polite"></p>
+      <p class="popup-note">Mentionnez ce code lors de votre appel</p>
+      <a href="tel:0189709634" class="popup-call">📞 Appeler maintenant — 01 89 70 96 34</a>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var STORAGE_KEY = 'popupSeen';
+    var CODES = ['K7X2', 'M4R9', 'B3W6', 'P8Q1', 'T5N4'];
+    var overlay, view1, view2, countdownEl, revealBtn, codeEl;
+    var countdownTimer = null;
+    var count = 20;
+    var isClosing = false;
+
+    function closePopup() {
+      if (isClosing) return;
+      isClosing = true;
+      localStorage.setItem(STORAGE_KEY, 'true');
+      if (countdownTimer !== null) { clearInterval(countdownTimer); countdownTimer = null; }
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.classList.add('popup-overlay--closing');
+
+      function onEnd(e) {
+        if (e.propertyName !== 'opacity') return;
+        overlay.removeEventListener('transitionend', onEnd);
+        overlay.classList.remove('popup-overlay--closing', 'popup-overlay--open');
+        overlay.style.display = 'none';
+        isClosing = false;
+      }
+      overlay.addEventListener('transitionend', onEnd);
+    }
+
+    function startCountdown() {
+      count = 20;
+      countdownEl.textContent = String(count);
+      if (countdownTimer !== null) clearInterval(countdownTimer);
+      countdownTimer = window.setInterval(function () {
+        count -= 1;
+        countdownEl.textContent = String(count);
+        if (count <= 0) { clearInterval(countdownTimer); countdownTimer = null; closePopup(); }
+      }, 1000);
+    }
+
+    function initPopup() {
+      overlay = document.getElementById('popup-overlay');
+      view1 = document.getElementById('popup-view-1');
+      view2 = document.getElementById('popup-view-2');
+      countdownEl = document.getElementById('popup-countdown');
+      revealBtn = document.getElementById('popup-reveal');
+      codeEl = document.getElementById('popup-code');
+      if (!overlay || !view1 || !view2 || !countdownEl || !revealBtn || !codeEl) return;
+
+      revealBtn.addEventListener('click', function () {
+        if (countdownTimer !== null) { clearInterval(countdownTimer); countdownTimer = null; }
+        var code = CODES[Math.floor(Math.random() * CODES.length)];
+        codeEl.textContent = code;
+        view1.classList.remove('popup-view--visible');
+        view2.classList.add('popup-view--visible');
+      });
+
+      document.querySelectorAll('[data-popup-close]').forEach(function (btn) {
+        btn.addEventListener('click', closePopup);
+      });
+
+      window.setTimeout(function () {
+        if (!localStorage.getItem('popupSeen')) {
+          view1.classList.add('popup-view--visible');
+          view2.classList.remove('popup-view--visible');
+          codeEl.textContent = '';
+          overlay.style.display = 'flex';
+          overlay.setAttribute('aria-hidden', 'false');
+          overlay.classList.remove('popup-overlay--closing');
+          overlay.offsetHeight;
+          requestAnimationFrame(function () { overlay.classList.add('popup-overlay--open'); });
+          startCountdown();
+        }
+      }, 4000);
+    }
+
+    document.addEventListener('DOMContentLoaded', initPopup);
+  })();
+</script>
+
+<style>
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .popup-overlay--open { opacity: 1; }
+  .popup-overlay--closing { opacity: 0; }
+
+  .popup-card {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 28px;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+    animation: float 3.5s ease-in-out infinite;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+    line-height: 1;
+    padding: 6px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+  }
+
+  .popup-close:hover { color: #0f172a; }
+
+  .popup-view { display: none; }
+  .popup-view--visible { display: block; }
+
+  .popup-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+
+  .popup-badge--urgent { background: #fef2f2; color: #dc2626; }
+  .popup-badge--success { background: #f0fdf4; color: #16a34a; }
+
+  .popup-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(18px, 5vw, 24px);
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  .popup-subtitle {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 20px;
+    line-height: 1.6;
+  }
+
+  .popup-countdown {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 10vw, 48px);
+    font-weight: 800;
+    color: #dc2626;
+    margin: 0 0 20px;
+    line-height: 1;
+  }
+
+  .popup-reveal {
+    background: #1d4ed8;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 12px;
+    transition: background 0.2s;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+  }
+
+  .popup-reveal:hover { background: #1e40af; }
+
+  .popup-code-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    color: #64748b;
+    margin: 0 0 8px;
+  }
+
+  .popup-code {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(44px, 12vw, 64px);
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: 8px;
+    margin: 0 0 8px;
+    line-height: 1.1;
+  }
+
+  .popup-note {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  .popup-call {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #dc2626;
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: 700;
+    padding: 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3);
+    transition: background-color 0.25s ease;
+    touch-action: manipulation;
+    box-sizing: border-box;
+  }
+
+  .popup-call:hover { background: #b91c1c; }
+
+  @media (max-width: 400px) {
+    .popup-card {
+      padding: 28px 16px;
+      border-radius: 16px;
+    }
+
+    .popup-code {
+      letter-spacing: 4px;
+    }
+  }
+</style>

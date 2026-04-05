@@ -1,0 +1,236 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id: sectionId = 'contact' } = Astro.props;
+---
+
+<section class="contact" id={sectionId}>
+  <div class="contact-card">
+    <div class="contact-badge-wrap">
+      <span class="contact-badge">CONTACT IMMÉDIAT</span>
+    </div>
+    <h2 class="contact-title">Demandez un devis gratuit</h2>
+    <p class="contact-subtitle">Nous traitons vos demandes de Plomberie 24h/24.</p>
+
+    <form class="contact-form" action="https://formspree.io/f/mzdkypqp" method="POST">
+      <div class="contact-row contact-row--split">
+        <div class="contact-field">
+          <label for="contact-prenom">Prénom <span class="contact-req" aria-hidden="true">*</span></label>
+          <input id="contact-prenom" type="text" name="prenom" required autocomplete="given-name" />
+        </div>
+        <div class="contact-field">
+          <label for="contact-nom">Nom <span class="contact-req" aria-hidden="true">*</span></label>
+          <input id="contact-nom" type="text" name="nom" required autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="contact-field">
+        <label for="contact-email">Email <span class="contact-req" aria-hidden="true">*</span></label>
+        <input id="contact-email" type="email" name="email" required autocomplete="email" />
+      </div>
+      <div class="contact-field">
+        <label for="contact-tel">Téléphone <span class="contact-req" aria-hidden="true">*</span></label>
+        <input id="contact-tel" type="tel" name="telephone" required autocomplete="tel" />
+      </div>
+      <div class="contact-field">
+        <label for="contact-message">Message ou commentaire <span class="contact-req" aria-hidden="true">*</span></label>
+        <textarea id="contact-message" name="message" required rows="5"></textarea>
+      </div>
+      <button type="submit" class="contact-submit">Envoyer la demande</button>
+    </form>
+
+    <div id="contact-success" style="display: none; text-align: center;">
+      <p style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: #0f172a;">✅ Votre demande a bien été envoyée ! Nous vous contactons très rapidement.</p>
+      <p style="font-family: 'Chelsea Market', cursive; font-size: 14px; color: #64748b;">Notre équipe vous répondra dans les plus brefs délais.</p>
+    </div>
+
+    <div id="contact-error" style="display: none; text-align: center; color: red;">
+      <p style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800;">❌ Une erreur s'est produite. Veuillez réessayer.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.contact-form');
+    const successDiv = document.getElementById('contact-success');
+    const errorDiv = document.getElementById('contact-error');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          successDiv.style.display = 'block';
+          errorDiv.style.display = 'none';
+        } else {
+          throw new Error();
+        }
+      } catch {
+        errorDiv.style.display = 'block';
+        successDiv.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact {
+    position: relative;
+    z-index: 1;
+    padding: 80px 16px 120px;
+  }
+
+  .contact-card {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.15);
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .contact-badge-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .contact-badge {
+    display: inline-block;
+    background: #fef2f2;
+    color: #dc2626;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 8px 16px;
+    border-radius: 9999px;
+  }
+
+  .contact-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 800;
+    color: #0f172a;
+    text-align: center;
+    margin-bottom: 12px;
+    line-height: 1.15;
+  }
+
+  .contact-subtitle {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 14px;
+    color: #64748b;
+    text-align: center;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .contact-row--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .contact-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-field label {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 6px;
+  }
+
+  .contact-req { color: #dc2626; }
+
+  .contact-field input,
+  .contact-field textarea {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-family: 'Chelsea Market', cursive;
+    font-size: 14px;
+    color: #0f172a;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+  }
+
+  .contact-field textarea {
+    min-height: 130px;
+    resize: vertical;
+  }
+
+  .contact-field input:focus,
+  .contact-field textarea:focus {
+    border-color: #1d4ed8;
+    outline: none;
+  }
+
+  .contact-submit {
+    width: 100%;
+    margin-top: 8px;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    -webkit-appearance: none;
+    touch-action: manipulation;
+  }
+
+  .contact-submit:hover { background: #1e40af; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (max-width: 640px) {
+    .contact {
+      padding: 60px 12px 100px;
+    }
+
+    .contact-card {
+      padding: 24px 16px;
+      border-radius: 16px;
+    }
+
+    .contact-row--split {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-submit {
+      font-size: 16px;
+      padding: 14px;
+    }
+  }
+</style>

@@ -1,0 +1,312 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id: sectionId = 'avis' } = Astro.props;
+
+const reviews = [
+  {
+    name: 'Sophie L.',
+    stars: 5,
+    text: 'Intervention rapide et efficace, le plombier est arrivé en 30 minutes chrono. Très professionnel et travail soigné.',
+  },
+  {
+    name: 'Karim B.',
+    stars: 4,
+    text: 'Bon service, tarif un peu élevé mais le travail est bien fait et l\'intervention était rapide.',
+  },
+  {
+    name: 'Julie M.',
+    stars: 5,
+    text: 'Super service. Le technicien a pris le temps d\'expliquer le problème et l\'a réparé rapidement. Je recommande.',
+  },
+  {
+    name: 'Thomas R.',
+    stars: 5,
+    text: 'Très bonne expérience. Arrivé rapidement et problème réglé en moins de 20 minutes. Parfait.',
+  },
+  {
+    name: 'Fatima A.',
+    stars: 3,
+    text: 'Le service est correct mais j\'aurais aimé plus d\'explications sur le tarif avant l\'intervention.',
+  },
+  {
+    name: 'Nadia K.',
+    stars: 5,
+    text: 'Intervention propre et rapide. Le technicien était très aimable et professionnel.',
+  },
+  {
+    name: 'Lucas G.',
+    stars: 4,
+    text: 'Bonne expérience globale, intervention rapide et travail bien fait. Je recommande sans hésiter.',
+  },
+];
+---
+
+<section class="reviews" id={sectionId} aria-labelledby="reviews-heading">
+  <div class="reviews-inner">
+    <h2 id="reviews-heading" class="reviews-title">Ce que nos clients disent de nous</h2>
+
+    <div class="reviews-slider">
+      <button type="button" class="reviews-arrow reviews-arrow--prev" aria-label="Avis précédent">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+      </button>
+
+      <div class="reviews-viewport" data-reviews-viewport>
+        <div class="reviews-track" data-reviews-track>
+          {reviews.map((r, i) => (
+            <div class={`review-slide${i === 0 ? ' is-active' : ''}`} data-review-slide role="group" aria-roledescription="slide" aria-label={`${i + 1} sur ${reviews.length}`}>
+              <div class="review-card-lift">
+                <article class="review-card">
+                  <div class="review-google">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="32" height="32" aria-hidden="true">
+                      <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
+                      <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
+                      <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
+                      <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
+                    </svg>
+                    <span class="review-google-label">Google</span>
+                  </div>
+                  <div class="review-stars" aria-label={`${r.stars} sur 5 étoiles`}>
+                    {Array.from({ length: 5 }, (_, si) => (
+                      <span class:list={['review-star', si < r.stars ? 'review-star--full' : 'review-star--empty']}>★</span>
+                    ))}
+                  </div>
+                  <p class="review-text">{r.text}</p>
+                  <p class="review-name">{r.name}</p>
+                </article>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button type="button" class="reviews-arrow reviews-arrow--next" aria-label="Avis suivant">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6" /></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initReviewsSlider() {
+    const root = document.getElementById('avis');
+    if (!root) return;
+
+    const track = root.querySelector('[data-reviews-track]');
+    const viewport = root.querySelector('[data-reviews-viewport]');
+    const slides = root.querySelectorAll('[data-review-slide]');
+    const prevBtn = root.querySelector('.reviews-arrow--prev');
+    const nextBtn = root.querySelector('.reviews-arrow--next');
+
+    if (!track || !viewport || !slides.length || !prevBtn || !nextBtn) return;
+
+    const total = slides.length;
+    let index = 0;
+    let touchStartX = 0;
+    let autoSlideTimer;
+
+    function goTo(nextIndex) {
+      index = ((nextIndex % total) + total) % total;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('is-active', i === index);
+      });
+    }
+
+    function startAutoSlide() {
+      autoSlideTimer = setInterval(() => goTo(index + 1), 4000);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlideTimer);
+      startAutoSlide();
+    }
+
+    prevBtn.addEventListener('click', () => { goTo(index - 1); resetAutoSlide(); });
+    nextBtn.addEventListener('click', () => { goTo(index + 1); resetAutoSlide(); });
+
+    viewport.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) < 48) return;
+      if (dx < 0) goTo(index + 1);
+      else goTo(index - 1);
+      resetAutoSlide();
+    }, { passive: true });
+
+    startAutoSlide();
+  }
+
+  initReviewsSlider();
+</script>
+
+<style>
+  .reviews {
+    position: relative;
+    z-index: 1;
+    padding: 100px 16px 140px;
+  }
+
+  .reviews-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .reviews-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(26px, 5vw, 52px);
+    font-weight: 800;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .reviews-slider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .reviews-arrow {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background-color: #1d4ed8;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
+  }
+
+  .reviews-arrow:hover {
+    background-color: #1e40af;
+    transform: scale(1.05);
+  }
+
+  .reviews-viewport {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .reviews-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .review-slide {
+    flex: 0 0 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
+  }
+
+  .review-card-lift {
+    max-width: 640px;
+    margin: 32px auto 48px;
+    transition: transform 0.3s ease;
+  }
+
+  .review-card-lift:hover {
+    transform: translateY(-6px);
+  }
+
+  .review-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .review-card-lift:hover .review-card {
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+  }
+
+  .review-slide.is-active .review-card {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .review-google {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .review-google-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #64748b;
+  }
+
+  .review-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .review-star--full { color: #fbbf24; }
+  .review-star--empty { color: #e2e8f0; }
+
+  .review-text {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.75;
+    margin-bottom: 18px;
+  }
+
+  .review-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: #0f172a;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (max-width: 640px) {
+    .reviews {
+      padding: 80px 8px 120px;
+    }
+
+    .reviews-slider {
+      gap: 6px;
+    }
+
+    .reviews-arrow {
+      width: 36px;
+      height: 36px;
+    }
+
+    .reviews-title {
+      margin-bottom: 32px;
+    }
+
+    .review-card {
+      padding: 20px 16px;
+    }
+
+    .review-card-lift {
+      margin: 20px auto 32px;
+    }
+  }
+</style>
