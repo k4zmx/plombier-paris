@@ -1,50 +1,19 @@
 ---
 ---
 
-<script>
-  (function () {
-    // Only load and autoplay video on non-mobile viewports
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const video = document.querySelector('.hero-video') as HTMLVideoElement | null;
-    if (!video) return;
-
-    if (isMobile) {
-      // On mobile: strip autoplay and don't load the video
-      video.removeAttribute('autoplay');
-      video.removeAttribute('preload');
-      video.setAttribute('preload', 'none');
-    } else {
-      // On desktop: inject source and play
-      const src = video.dataset.src;
-      if (src) {
-        const source = document.createElement('source');
-        source.src = src;
-        source.type = 'video/mp4';
-        video.appendChild(source);
-        video.load();
-        video.play().catch(() => {/* autoplay blocked — ignore */});
-      }
-    }
-  })();
-</script>
-
 <section class="hero" id="accueil">
   <div class="hero-card">
     <div class="hero-inner">
-      <!-- Left: Video -->
+      <!-- Left: Static hero image -->
       <div class="hero-left">
-        <video
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="none"
-          disablePictureInPicture
-          controlsList="nodownload nofullscreen noremoteplayback"
-          class="hero-video"
-          data-src="/Plombiervid.mp4"
-        >
-        </video>
+        <img
+          src="/herobc.jpg"
+          alt="Plombier professionnel au travail"
+          class="hero-img"
+          width="680"
+          height="240"
+          fetchpriority="high"
+        />
         <div class="hero-badges">
           <span class="badge">💧 Intervention en 30 min chrono</span>
           <span class="badge">🛠️ Plombier Urgence Près De Vous</span>
@@ -115,12 +84,11 @@
     gap: 14px;
   }
 
-  .hero-video {
+  .hero-img {
     width: 100%;
     height: 240px;
     object-fit: cover;
     border-radius: 16px;
-    pointer-events: none;
     display: block;
   }
 
@@ -231,6 +199,7 @@
     .hero-card {
       padding: 20px 16px;
       border-radius: 20px;
+      animation: none !important;
     }
 
     .hero-inner {
@@ -243,7 +212,7 @@
       width: 100%;
     }
 
-    .hero-video {
+    .hero-img {
       height: 200px;
     }
 
@@ -255,9 +224,17 @@
       grid-template-columns: 1fr;
     }
 
+    .trust-item {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
     .hero-cta-call {
       font-size: 18px;
       padding: 14px;
+      transition: none !important;
     }
   }
 </style>

@@ -233,4 +233,19 @@ const { id: sectionId = 'contact' } = Astro.props;
       padding: 14px;
     }
   }
+
+  @media (max-width: 768px) {
+    .contact-card {
+      animation: none !important;
+    }
+
+    .contact-field input,
+    .contact-field textarea {
+      transition: none !important;
+    }
+
+    .contact-submit {
+      transition: none !important;
+    }
+  }
 </style>

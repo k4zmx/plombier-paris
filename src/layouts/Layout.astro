@@ -170,4 +170,11 @@ import '../styles/global.css';
 		position: relative;
 		z-index: 1;
 	}
+
+	@media (max-width: 768px) {
+		/* Disable heavy blob animations on mobile */
+		.blob {
+			animation: none !important;
+		}
+	}
 </style>

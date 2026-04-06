@@ -185,6 +185,22 @@
 
     .service-card-inner {
       padding: 24px 20px;
+      animation: none !important;
+    }
+
+    /* Kill entrance animations — cards appear instantly */
+    .service-card-hidden {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .service-card-visible {
+      transition: none !important;
+    }
+
+    /* No hover lift on touch */
+    .service-card:hover {
+      transform: none !important;
     }
   }
 </style>

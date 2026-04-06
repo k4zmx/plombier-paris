@@ -309,4 +309,26 @@ const reviews = [
       margin: 20px auto 32px;
     }
   }
+
+  @media (max-width: 768px) {
+    .review-slide.is-active .review-card {
+      animation: none !important;
+    }
+
+    .review-card-lift {
+      transition: none !important;
+    }
+
+    .review-card-lift:hover {
+      transform: none !important;
+    }
+
+    .reviews-arrow {
+      transition: none !important;
+    }
+
+    .reviews-arrow:hover {
+      transform: none !important;
+    }
+  }
 </style>
