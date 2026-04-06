@@ -321,9 +321,18 @@
   /* ── Mobile ── */
   @media (max-width: 768px) {
     .tarifs {
-      padding: 60px 12px;
+      padding: 60px 16px;
       margin-top: -32px;
       margin-bottom: -32px;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    .tarifs-header h2,
+    .tarifs-header p {
+      padding: 0 4px;
+      text-align: center;
     }
 
     .tarifs-grid {
@@ -337,6 +346,9 @@
     .tarifs-card {
       padding: 20px 16px;
       animation: none !important;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .tarifs-table-wrap {

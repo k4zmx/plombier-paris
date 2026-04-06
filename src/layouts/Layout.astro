@@ -36,6 +36,7 @@ import '../styles/global.css';
 
 	html {
 		scroll-behavior: smooth;
+		overflow-x: hidden;
 	}
 
 	body {
@@ -185,6 +186,27 @@ import '../styles/global.css';
 		/* Prevent anchor targets from being hidden behind the sticky navbar */
 		section[id] {
 			scroll-margin-top: 72px;
+		}
+
+		/* Sticky CTA bar — full-width strip locked to viewport bottom.
+		   Using left/right instead of left+transform so horizontal overflow
+		   on any scrollable child (e.g. tarifs tables) never shifts it. */
+		.sticky-btn {
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			transform: none !important;
+			border-radius: 0;
+			justify-content: center;
+			padding: 14px 20px;
+			font-size: 17px;
+			letter-spacing: 0.5px;
+		}
+
+		.sticky-btn:hover {
+			transform: none !important;
+			box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
 		}
 	}
 </style>
