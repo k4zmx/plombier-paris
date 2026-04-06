@@ -35,7 +35,7 @@
                 <td class="price">89 €</td>
               </tr>
               <tr>
-                <td>Devis / Diagnostic sur place</td>
+                <td>Devis / Diagnostic</td>
                 <td class="price gratuit" colspan="3">Gratuit</td>
               </tr>
             </tbody>
@@ -361,6 +361,12 @@
 
     .tarifs-table td {
       padding: 6px 8px;
+    }
+
+    /* First-column labels: keep on one line */
+    .tarifs-table td:first-child {
+      font-size: 11px;
+      white-space: nowrap;
     }
 
     .price {

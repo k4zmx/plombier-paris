@@ -176,5 +176,15 @@ import '../styles/global.css';
 		.blob {
 			animation: none !important;
 		}
+
+		/* Push main content below the sticky navbar (~65px) */
+		main {
+			padding-top: 68px;
+		}
+
+		/* Prevent anchor targets from being hidden behind the sticky navbar */
+		section[id] {
+			scroll-margin-top: 72px;
+		}
 	}
 </style>
