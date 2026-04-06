@@ -21,14 +21,16 @@ const tools = [
         <div class="tools-track">
           {tools.map((t) => (
             <div class="tools-item">
-              <img src={t.img} alt={t.name} class="tools-logo" />
+              <img src={t.img} alt={t.name} class="tools-logo" width="110" height="44" loading="lazy" decoding="async" />
             </div>
           ))}
-          {tools.map((t) => (
-            <div class="tools-item" aria-hidden="true">
-              <img src={t.img} alt="" class="tools-logo" />
-            </div>
-          ))}
+          <div aria-hidden="true" style="display:contents;">
+            {tools.map((t) => (
+              <div class="tools-item">
+                <img src={t.img} alt="" class="tools-logo" width="110" height="44" loading="lazy" decoding="async" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -80,6 +82,8 @@ const tools = [
     animation: marquee 22s linear infinite;
     white-space: nowrap;
     flex-wrap: nowrap;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .tools-item {
@@ -130,6 +134,15 @@ const tools = [
     .tools-logo {
       height: 32px;
       max-width: 80px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tools-track {
+      animation-play-state: paused;
+    }
+    .tools-card {
+      animation: none;
     }
   }
 </style>

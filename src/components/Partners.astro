@@ -20,14 +20,16 @@ const partners = [
         <div class="partners-track">
           {partners.map((p) => (
             <div class="partners-item">
-              <img src={p.img} alt={p.name} class="partners-logo" />
+              <img src={p.img} alt={p.name} class="partners-logo" width="110" height="44" loading="lazy" decoding="async" />
             </div>
           ))}
-          {partners.map((p) => (
-            <div class="partners-item" aria-hidden="true">
-              <img src={p.img} alt="" class="partners-logo" />
-            </div>
-          ))}
+          <div aria-hidden="true" style="display:contents;">
+            {partners.map((p) => (
+              <div class="partners-item">
+                <img src={p.img} alt="" class="partners-logo" width="110" height="44" loading="lazy" decoding="async" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -79,6 +81,8 @@ const partners = [
     animation: marquee 22s linear infinite;
     white-space: nowrap;
     flex-wrap: nowrap;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .partners-item {
@@ -129,6 +133,15 @@ const partners = [
     .partners-logo {
       height: 32px;
       max-width: 80px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partners-track {
+      animation-play-state: paused;
+    }
+    .partners-card {
+      animation: none;
     }
   }
 </style>

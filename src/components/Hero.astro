@@ -1,6 +1,33 @@
 ---
 ---
 
+<script>
+  (function () {
+    // Only load and autoplay video on non-mobile viewports
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const video = document.querySelector('.hero-video') as HTMLVideoElement | null;
+    if (!video) return;
+
+    if (isMobile) {
+      // On mobile: strip autoplay and don't load the video
+      video.removeAttribute('autoplay');
+      video.removeAttribute('preload');
+      video.setAttribute('preload', 'none');
+    } else {
+      // On desktop: inject source and play
+      const src = video.dataset.src;
+      if (src) {
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        video.load();
+        video.play().catch(() => {/* autoplay blocked — ignore */});
+      }
+    }
+  })();
+</script>
+
 <section class="hero" id="accueil">
   <div class="hero-card">
     <div class="hero-inner">
@@ -11,11 +38,12 @@
           muted
           loop
           playsinline
+          preload="none"
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
           class="hero-video"
+          data-src="/Plombiervid.mp4"
         >
-          <source src="/Plombiervid.mp4" type="video/mp4" />
         </video>
         <div class="hero-badges">
           <span class="badge">💧 Intervention en 30 min chrono</span>
@@ -186,6 +214,11 @@
   .hero-cta-call:hover {
     background: #b91c1c;
     box-shadow: 0 10px 28px rgba(185, 28, 28, 0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-card { animation: none; }
+    .trust-item { animation: none; opacity: 1; }
   }
 
   /* MOBILE */
