@@ -7,6 +7,10 @@
     <div class="tarifs-header">
       <h2>Nos Tarifs</h2>
       <p>Tarification transparente — devis détaillé avant chaque intervention.</p>
+      <span class="tarifs-guarantee-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Garantie 2 ans incluse sur chaque intervention
+      </span>
     </div>
 
     <div class="tarifs-grid">
@@ -15,6 +19,10 @@
       <div class="tarifs-card">
         <div class="tarifs-card-title-bar">
           <h3>Déplacements</h3>
+          <span class="tarifs-title-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h12"/><path d="M4 14h9"/><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/></svg>
+            À Partir de :
+          </span>
         </div>
         <div class="tarifs-table-wrap">
           <table class="tarifs-table">
@@ -46,6 +54,10 @@
       <div class="tarifs-card">
         <div class="tarifs-card-title-bar">
           <h3>Diagnostics &amp; Recherches</h3>
+          <span class="tarifs-title-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h12"/><path d="M4 14h9"/><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/></svg>
+            À Partir de :
+          </span>
         </div>
         <div class="tarifs-table-wrap">
           <table class="tarifs-table">
@@ -79,6 +91,10 @@
       <div class="tarifs-card tarifs-card--wide">
         <div class="tarifs-card-title-bar">
           <h3>Interventions courantes</h3>
+          <span class="tarifs-title-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h12"/><path d="M4 14h9"/><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/></svg>
+            À Partir de :
+          </span>
         </div>
         <p class="tarifs-card-note">Prix hors déplacement — devis gratuit sur place avant tout travail.</p>
         <div class="tarifs-table-wrap">
@@ -97,6 +113,50 @@
               <tr>
                 <td>Remplacement robinet</td>
                 <td class="price">129 €</td>
+              </tr>
+              <tr>
+                <td>Réparation fuite (joint / raccord)</td>
+                <td class="price">79 €</td>
+              </tr>
+              <tr>
+                <td>Réparation fuite tuyauterie</td>
+                <td class="price">99 €</td>
+              </tr>
+              <tr>
+                <td>Remplacement robinet lavabo</td>
+                <td class="price">99 €</td>
+              </tr>
+              <tr>
+                <td>Remplacement mitigeur cuisine</td>
+                <td class="price">109 €</td>
+              </tr>
+              <tr>
+                <td>Remplacement robinet douche</td>
+                <td class="price">119 €</td>
+              </tr>
+              <tr>
+                <td>Remplacement chauffe-eau 50–100L</td>
+                <td class="price">249 €</td>
+              </tr>
+              <tr>
+                <td>Remplacement chauffe-eau 150–200L</td>
+                <td class="price">349 €</td>
+              </tr>
+              <tr>
+                <td>Débouchage évier</td>
+                <td class="price">99 €</td>
+              </tr>
+              <tr>
+                <td>Débouchage lavabo</td>
+                <td class="price">99 €</td>
+              </tr>
+              <tr>
+                <td>Débouchage canalisation</td>
+                <td class="price">189 €</td>
+              </tr>
+              <tr>
+                <td>Débouchage colonne principale</td>
+                <td class="price">269 €</td>
               </tr>
             </tbody>
           </table>
@@ -148,6 +208,22 @@
     line-height: 1.7;
   }
 
+  /* ── Guarantee badge ── */
+  .tarifs-guarantee-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    padding: 8px 20px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1d4ed8;
+    margin-top: 16px;
+  }
+
   /* ── Card grid ── */
   .tarifs-grid {
     display: grid;
@@ -185,8 +261,25 @@
   .tarifs-card-title-bar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: flex-start;
+    gap: 12px;
     margin-bottom: 20px;
+  }
+
+  .tarifs-title-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .tarifs-card-icon {
@@ -352,7 +445,7 @@
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
-      scrollbar-color: #1d4ed8 #e2e8f0;
+      scrollbar-color: #dc2626 #e2e8f0;
     }
 
     .tarifs-table-wrap::-webkit-scrollbar {
@@ -365,7 +458,7 @@
     }
 
     .tarifs-table-wrap::-webkit-scrollbar-thumb {
-      background: #1d4ed8;
+      background: #dc2626;
       border-radius: 4px;
     }
 
